@@ -1,0 +1,104 @@
+
+Composition X Program Code
+by Jamie Howard
+
+
+The code was designed to be easy to change and update. 
+It is also possible to make dramatic changes, such as the number of leds and sensors without too much work.
+There are 8 main files:
+	1. CompX.ino
+	2/3. Sculpture.cpp / .h
+	4/5. LED.cpp /.h
+	6/7. Sensor.cpp /.h
+	8. Definitions.h
+
+	
+This is a general overview of the code structure and not super comprehensive, for that, please see the code comments. 
+Since it is object orientated it is made up of multiple files which represent objects like leds and sensors.
+
+	  Sensor  LED
+		 |     |
+		Sculpture
+			|
+		  CompX
+		  
+Other files Definitions.h and Arduino.h are for defining constants and including the arduino libary, respectively.
+Files ending in .h are header files and used to set up the lay out of a class or object. 
+It defines what methods and variables are used in an object.
+The .cpp files are source files and contain the actual logic of the code.
+	
+1. CompX.ino
+	The main arduino file. This gets called first and last. 
+	It first runs setup() where objects and variables are initialised, then runs the loop() method.
+	When first starting up and when the button is pressed, the loop goes to the calibration routine. 
+	Here, it checks what type of calibration to run, and loops until the method returns that it has completed.
+	
+	The loop then checks which mode the sculpture should be run in (this has a default value defined in the definations file)
+	The sculpture is also updated; a timer is used to make sure everything updates at a similar rate of change.
+	
+2. Sculpture.cpp / .h
+	Manages and updates all the leds and sensors.
+	Initialises and creates the LEDS and Sensors (including setting default values like MAX_BRIGHTNESS
+	Pointers to these objects are then stored in arrays for easy access. Pointers are the address of an objects actual memmory location.
+	Contains the code for the different modes.
+		-RGB3Sensor - uses 3 sensors to update the RGB leds individually (currently uses the slightly older code, not as robust)
+		-WhiteSingleSensor - uses just the central sensor to update all 3 leds.
+		-ColourChange - Updates all 3 colours as a factor of time, i.e. cycles through the colour range evenly
+		-RGB3SensorAlternate - Newer alternate version, should be more stable and replace the older version
+
+	Also contains the method for calibrating the sensor ranges and checks whether the leds should be in single or two stage mode.
+	
+3. LED.cpp / .h
+	Controls the led by updating the corresponding pin with colour values.
+	Each led object represents a single colour of an LED strip.
+	Either a value can be manually updated using SetBrightness() or a value can be calculated and then written.
+	To update based on a sensor distance value:
+		First the sensor value needs to be passed on by the sculpture object to the led.
+		The led then determines whether the sensor value is in range.
+			If it is, a scale factor is determined { Where x is the distance and y is the scale factor: y = cos([x-2] / [ ThresholdDistance / 15]) }
+			Otherwise the scale is 0 (off)
+		It is then worked out whether someone is moving closer, or farther away.
+		The scale factor is then multiplied by the maximum brightness to get a target brightness
+		The actual brightness to be written is then calculated by increasing a buffer until it matches the target value.
+		
+4. Sensor.cpp / .h
+	Updates the sensor reading and stores it into an array. The size of the array is in Definitions.h
+	It then takes the mode (most common) value and updates the mode if necessary.
+	A similar method is used for the calibration value. For this, the mode of the last set of modes is selected.
+	
+5. Definitions.h
+	Contains definitions used throughout the program.
+	They are kept in one file so that any likely adjustments can be made easily.
+	If a value is changed, the solution needs to be recompiled.
+	For details of what can be changed, check the comments of the code.
+	
+
+	
+	This program was written and compiled in C++ using Visual Studio and the Visual Micro plugin.
+To compile using Visual Studio, download and install Visual Micro and follow the instructions.
+Open the solution file, CompX.sln, then hit F5 to compile and build.
+
+To open and compile using th Arduino IDE:
+ - In the IDE, click open and find the file CompX.ino
+ - Agree to moving and creating a new folder.
+ - Go to the new folder location and copy the follwing files to the new directory:
+	> Sculpture.h
+	> Sculpture.cpp
+	> Definitions.h
+	> LED.h
+	> LED.cpp
+	> Sensor.h
+	> Sensor.cpp
+
+Now in the arduin IDE open any of the above files.
+In the new window there should be tabs for each of the files.
+Ensure the right port and model arduino is selected and hit run/compile.
+It should succesfully upload. 
+If not there is either something wrong with the arduino set up / IDE set up, or a change has been made to the code. 
+	
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,13 @@
+﻿Build started 07/10/2015 19:38:06.
+     1>Project "C:\Projects\TotemProject\Totem\Totem\Totem.vcxproj" on node 2 (Build target(s)).
+     1>Build:
+         "C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "C:\Projects\TotemProject\Totem\Totem\Totem.vcxproj" "/solution:C:\Projects\TotemProject\Totem\Totem.sln" "/config:Debug" "/platform:Win32"
+         VisualGDB: Sending 1 updated source file to build machine...
+         VisualGDB: Run "make CONFIG=Debug" in directory "/home/pi/TotemProject" on pi@192.168.1.5 (SSH)
+         g++ -ggdb -ffunction-sections   -DDEBUG  -c Sensor.cpp -o Debug/Sensor.o -MD -MF Debug/Sensor.dep
+         g++ -o Debug/Totem -Wl,-gc-sections    -Wl,--start-group Debug/Connection.o Debug/LED.o Debug/Sensor.o Debug/Timer.o Debug/Totem.o -lm -lrt -lpthread -lportaudio -lwiringPi -lsndfile  -Wl,--rpath='$ORIGIN'   -Wl,--end-group
+     1>Done Building Project "C:\Projects\TotemProject\Totem\Totem\Totem.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.88

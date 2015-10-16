@@ -1,0 +1,16 @@
+﻿Build started 16/09/2015 14:19:41.
+     1>Project "C:\Projects\PortAudioTest\PortaudioTest\PortaudioTest.vcxproj" on node 2 (Build target(s)).
+     1>Build:
+         "C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "C:\Projects\PortAudioTest\PortaudioTest\PortaudioTest.vcxproj" "/solution:C:\Projects\PortAudioTest\PortAudioTest.sln" "/config:Debug" "/platform:Win32"
+         VisualGDB: Sending 8 updated source files to build machine...
+         VisualGDB: Run "make CONFIG=Debug" in directory "/tmp/VisualGDB/c/Projects/PortAudioTest/PortaudioTest" on pi@192.168.1.5 (SSH)
+         mkdir Debug
+         gcc -ggdb -ffunction-sections -O0   -DDEBUG  -c pa_ringbuffer.c -o Debug/pa_ringbuffer.o -MD -MF Debug/pa_ringbuffer.dep
+         gcc -ggdb -ffunction-sections -O0   -DDEBUG  -c pa_unix_util.c -o Debug/pa_unix_util.o -MD -MF Debug/pa_unix_util.dep
+         gcc -ggdb -ffunction-sections -O0   -DDEBUG  -c PortaudioTest.c -o Debug/PortaudioTest.o -MD -MF Debug/PortaudioTest.dep
+         g++ -o Debug/PortaudioTest -Wl,-gc-sections    -Wl,--start-group Debug/pa_ringbuffer.o Debug/pa_unix_util.o Debug/PortaudioTest.o -lportaudio -lpthread -lsndfile  -Wl,--rpath='$ORIGIN'   -Wl,--end-group
+     1>Done Building Project "C:\Projects\PortAudioTest\PortaudioTest\PortaudioTest.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:12.78
